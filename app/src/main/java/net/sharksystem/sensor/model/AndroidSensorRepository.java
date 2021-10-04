@@ -156,6 +156,18 @@ public class AndroidSensorRepository implements SensorRepository {
       bnList.add(cursor.getString(id));
     }
     cursor.close();
-      return bnList;
+    return bnList;
+  }
+
+  public void dropTable() {
+    Log.d("Test","dropTable");
+
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    db.execSQL("DROP TABLE IF EXISTS "+SensorDataContract.SDEntry.TABLE_NAME+";");
+  }
+  public void createTable() {
+    Log.d("Test","createTable");
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    db.execSQL(SensorDataContract.SDEntry.getCreateString());
   }
 }
