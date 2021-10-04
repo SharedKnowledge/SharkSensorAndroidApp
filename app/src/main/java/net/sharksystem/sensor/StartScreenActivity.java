@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class StartScreenActivity extends ASAPActivity implements NewSensorDataReceivedListener {
+public class StartScreenActivity extends ASAPActivity implements NewSensorDataReceivedListener, View.OnClickListener {
 
   Spinner spinner;
   SharkSensorComponentImpl sensorComponent;
@@ -44,30 +44,40 @@ public class StartScreenActivity extends ASAPActivity implements NewSensorDataRe
 
   private void populateSpinner() {
     List<String> spinnerArray = sensorComponent.getAllBaseNames();
+    spinnerArray.add(0,"Select Base name");
     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
       this, android.R.layout.simple_spinner_item, spinnerArray
     );
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     Spinner sItems = (Spinner) findViewById(R.id.BNs_spinner);
     sItems.setAdapter(adapter);
+    sItems.setSelection(0);
   }
 
-  public void getAllForId(View v){
+  @Override
+  public void onClick(View view) {
     String text = spinner.getSelectedItem().toString();
     System.out.println("text is"+text);
     ArrayList<SensorData> list = (ArrayList<SensorData>)sensorComponent.getSensorDataForId(text);
-
-    if(list!=null&&!list.isEmpty()) {
-      //Intent intent = new Intent(this, TableViewActivity.class);
-      Intent intent = new Intent(this, GraphViewActivity.class);
-      intent.putExtra("list", list);
-      startActivity(intent);
+    if(!list.isEmpty()){
+      switch (view.getId()) {
+        case R.id.graph_button:
+          Intent intentGraph = new Intent(this, GraphViewActivity.class);
+          intentGraph.putExtra("list", list);
+          startActivity(intentGraph);
+          break;
+        case R.id.table_button:
+          Intent intentTable = new Intent(this, TableViewActivity.class);
+          intentTable.putExtra("list", list);
+          startActivity(intentTable);
+          break;
+      }
     }
     else{
       Toast.makeText(this, "No entry found", Toast.LENGTH_SHORT).show();
+
     }
   }
-
   @Override
   public void dataReceived() {
     populateSpinner();

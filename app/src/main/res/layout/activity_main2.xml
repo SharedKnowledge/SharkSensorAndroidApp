@@ -15,11 +15,6 @@
     android:layout_centerVertical="true"
     android:orientation="horizontal">
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/start_screen_text" />
-
     <!--com.google.android.material.textfield.TextInputEditText
       android:id="@+id/sensor_data_id"
       android:layout_width="fill_parent"
@@ -34,13 +29,14 @@
       android:id="@+id/graph_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:onClick="getAllForId"
+      android:onClick="onClick"
       android:text="Graph" />
 
     <Button
       android:id="@+id/table_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:onClick="onClick"
       android:text="Table" />
   </LinearLayout>
 
