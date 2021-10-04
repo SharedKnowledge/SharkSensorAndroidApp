@@ -74,29 +74,29 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
   public void onClick(View view) {
     JSONObject json = null;
     int viewId = view.getId();
-    this.resetBtnColor();
     switch (viewId) {
       case R.id.btn_humidity:
+        this.resetBtnColor();
         humidity.setBackgroundColor(Color.parseColor("#006600"));
         this.currentType = DataType.HUMIDITY;
         break;
       case R.id.btn_soil:
+        this.resetBtnColor();
         soil.setBackgroundColor(Color.parseColor("#006600"));
         this.currentType = DataType.SOIL;
         break;
       case R.id.btn_temperature:
+        this.resetBtnColor();
         temperature.setBackgroundColor(Color.parseColor("#006600"));
         this.currentType = DataType.TEMPERATURE;
         break;
       case R.id.btn_back:
         System.out.println("back");
         daysBack--;
-        humidity.setBackgroundColor(Color.parseColor("#006600"));
         break;
       case R.id.btn_next:
         System.out.println("next");
         daysBack++;
-        humidity.setBackgroundColor(Color.parseColor("#006600"));
         break;
     }
     loadGraph(this.currentType);
