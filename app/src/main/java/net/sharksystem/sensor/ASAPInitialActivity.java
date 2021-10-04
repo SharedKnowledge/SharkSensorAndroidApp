@@ -69,25 +69,6 @@ public class ASAPInitialActivity extends Activity {
       sharkPeer.start(applicationSideASAPPeer);
       SharkPeerSingleton.setSharkPeer(sharkPeer);
 
-
-
-      ArrayList<SensorData> list = new ArrayList<>();
-      list.add(new SensorData("123",17.4,Unit.C,67.4,Unit.P,52.1,Unit.P,(System.currentTimeMillis()/1000.0)-20000));
-      list.add(new SensorData("test",33.3,Unit.C,71.1,Unit.P,42.2,Unit.P,(System.currentTimeMillis()/1000.0)-13400));
-      list.add(new SensorData("345",-42.6,Unit.C,55.4,Unit.P,43.1,Unit.P,(System.currentTimeMillis()/1000.0)));
-      list.add(new SensorData("test",12.4,Unit.C,63.9,Unit.P,43.8,Unit.P,(System.currentTimeMillis()/1000.0)));
-      list.add(new SensorData("123",22.1,Unit.C,64.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)-19000));
-      list.add(new SensorData("123",22.1,Unit.C,44.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)-18000));
-      list.add(new SensorData("123",22.1,Unit.C,54.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)-15000));
-      list.add(new SensorData("123",22.1,Unit.C,64.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)-10000));
-      list.add(new SensorData("123",22.1,Unit.C,64.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)-7000));
-      list.add(new SensorData("123",22.1,Unit.C,74.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)-2000));
-      list.add(new SensorData("123",22.1,Unit.C,54.7,Unit.P,44.6,Unit.P,(System.currentTimeMillis()/1000.0)));
-
-      repo.insertNewEntries(list);
-
-
-
     } catch (IOException | ASAPException | SharkException e) {
       e.printStackTrace();
       Toast.makeText(this,
