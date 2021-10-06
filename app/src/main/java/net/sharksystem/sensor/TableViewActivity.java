@@ -61,7 +61,7 @@ public class TableViewActivity extends AppCompatActivity implements NewSensorDat
     }
   }
 
-  TableRow makeRow(TableRow.LayoutParams rowParams, String[] values, String backColor, String textColor){
+  private TableRow makeRow(TableRow.LayoutParams rowParams, String[] values, String backColor, String textColor){
     TableRow row = new TableRow(this);
     row.setLayoutParams(rowParams);
     row.setBackgroundColor(Color.parseColor(backColor));

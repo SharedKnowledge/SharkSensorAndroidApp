@@ -39,6 +39,7 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
   private int daysBack;
   private List<SensorData> sensorDataList;
   private DataType currentType;
+  private String sensorId;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,9 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
     Log.d("sharkUI","Start graph activity");
 
     this.sensorDataList = (ArrayList<SensorData>)intent.getSerializableExtra("list");
+    if(sensorDataList.size()>0){
+      this.sensorId = sensorDataList.get(0).getBn();
+    }
     daysBack = 0;
     graph = (GraphView) findViewById(R.id.graph);
     graph.setVisibility(View.VISIBLE);
@@ -121,13 +125,12 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
   }
   //Erzeugung eines Datums des aktuellen Tages, von welchem die als Parameter übergebenen Tage abgezogen,
   //bzw hinzugefügt werden. Das Datum wird zu einem String konvertiert
-  private String getDateString(int day){
+   private String getDateString(int day){
     Calendar cal = new GregorianCalendar();
     cal.set(Calendar.HOUR_OF_DAY, 0);
     cal.add(Calendar.DAY_OF_MONTH, day);
     Date date = new Date(cal.getTime().getTime());
     SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-    Log.d("sharkUI","Get Date string: "+df.format(date));
     return df.format(date);
   }
   //Darstellung des Graphen
@@ -148,7 +151,7 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
       graph.getViewport().setXAxisBoundsManual(true);
     }
   }
-  private List<SensorData> getAllEntriesOfSameDay(String dateString){
+   List<SensorData> getAllEntriesOfSameDay(String dateString){
     List<SensorData> sameDayList = new ArrayList<>();
     SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
     for(SensorData data: this.sensorDataList){
@@ -167,7 +170,7 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
     });
     return sameDayList;
   }
-  private double getDataWithType(DataType type, SensorData data){
+   double getDataWithType(DataType type, SensorData data){
     switch(type){
       case SOIL:
         return data.getSoil();
@@ -181,7 +184,13 @@ public class GraphViewActivity extends AppCompatActivity implements View.OnClick
 
   @Override
   public void dataReceived() {
-    loadGraph(this.currentType);
+    try {
+      SharkSensorComponent component = (SharkSensorComponent)SharkPeerSingleton.getSharkPeer().getComponent(SharkSensorComponentImpl.class);
+      component.getSensorDataForId(this.sensorId);
+      loadGraph(this.currentType);
+    } catch (SharkException e) {
+      e.printStackTrace();
+    }
   }
   @Override
   public void onDestroy() {
